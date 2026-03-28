@@ -6,11 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **research project** (not a software codebase) investigating multi-generational AI model collapse and proposing the **IQD (Information Quality Density)** framework as a unified metric for quantifying it.
 
-## Contents
+## Project Structure
 
-- `idea/未命名.md` — Main research notes: theoretical framework, math derivations, experiment design, and paper outline
-- `ebc042e767de551803ccfcc45e2454f5-Paper-Conference.pdf` — Reference paper (Dohmatob et al., "Strong Model Collapse", ICLR 2025)
-- Saved WordPress page — Blog post on Linux learning (unrelated to the core research)
+- `docs/theoretical_framework.md` — Main research notes: theoretical framework, math derivations, experiment design, and paper outline
+- `docs/experiment_plan.md` — Experiment planning notes
+- `references/dohmatob2025_strong_model_collapse.pdf` — Reference paper (Dohmatob et al., "Strong Model Collapse", ICLR 2025)
+- `src/` — Experiment source code (exp0–exp3, training pipeline, evaluation, analysis)
+- `results/` — Experiment outputs (figures, CSVs, JSONs)
+- `scripts/` — Shell scripts for environment setup and running experiments
+- `figures/` — Publication-quality figures
+- `data/` — Data files (e.g., real_texts.json)
 
 ## Research Context
 
@@ -30,6 +35,6 @@ The project builds on the "Strong Model Collapse" line of work and aims to:
 
 ## Relevant Tools
 
-The experiment code (not yet written) is expected to use:
 - `mauve-text` Python package for MAUVE score computation
-- Standard ML stack for ridge regression / model training
+- Standard ML stack (PyTorch, scikit-learn) for model training
+- See `requirements.txt` for full dependencies

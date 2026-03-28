@@ -20,7 +20,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
-from experiments.utils import clear_gpu_memory, gpu_mem_usage, Timer
+from src.utils import clear_gpu_memory, gpu_mem_usage, Timer
 
 
 # ── Fine-tune ────────────────────────────────────────────────────────────────

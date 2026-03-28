@@ -50,5 +50,5 @@ mkdir -p results/exp0 results/exp1 results/exp2
 echo "========================================="
 echo "  环境搭建完成!"
 echo "  激活环境: conda activate iqd"
-echo "  运行实验: bash run_all.sh"
+echo "  运行实验: bash scripts/run_all.sh"
 echo "========================================="

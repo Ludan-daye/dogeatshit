@@ -25,7 +25,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
-from experiments.utils import save_fig
+from src.utils import save_fig
 
 RESULTS_DIR = PROJECT_ROOT / "results"
 

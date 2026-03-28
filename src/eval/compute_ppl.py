@@ -8,7 +8,7 @@ import torch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from experiments.utils import clear_gpu_memory
+from src.utils import clear_gpu_memory
 
 
 def compute_ppl_on_texts(model_path: str, texts: list,

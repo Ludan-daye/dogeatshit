@@ -22,7 +22,7 @@ from scipy.optimize import curve_fit
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
-from experiments.utils import save_fig, ensure_dir
+from src.utils import save_fig, ensure_dir
 
 RESULTS_DIR = PROJECT_ROOT / "results"
 

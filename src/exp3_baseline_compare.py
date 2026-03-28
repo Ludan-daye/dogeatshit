@@ -24,7 +24,7 @@ from scipy.stats import wasserstein_distance
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import Ridge
 
-from experiments.utils import save_fig, save_csv
+from src.utils import save_fig, save_csv
 
 # ── 参数 ──────────────────────────────────────────────────────────────
 N_SAMPLES     = 1000

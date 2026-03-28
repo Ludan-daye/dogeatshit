@@ -5,3 +5,7 @@ __pycache__/
 *.pyc
 *.tar.gz
 *.safetensors
+
+# Data and model artifacts
+data/*.json
+results/**/models/

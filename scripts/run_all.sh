@@ -13,13 +13,14 @@ set -e
 LAYER=${1:-all}
 SUB_EXP=${2:-all}
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-cd "$SCRIPT_DIR/experiments"
+cd "$PROJECT_DIR/src"
 
 # 创建结果目录
-mkdir -p "$SCRIPT_DIR/results/exp0"
-mkdir -p "$SCRIPT_DIR/results/exp1"
-mkdir -p "$SCRIPT_DIR/results/exp2"
+mkdir -p "$PROJECT_DIR/results/exp0"
+mkdir -p "$PROJECT_DIR/results/exp1"
+mkdir -p "$PROJECT_DIR/results/exp2"
 
 echo "========================================="
 echo "  IQD 验证实验"
@@ -76,5 +77,5 @@ fi
 echo ""
 echo "========================================="
 echo "  所有实验完成!"
-echo "  结果目录: $SCRIPT_DIR/results/"
+echo "  结果目录: $PROJECT_DIR/results/"
 echo "========================================="
