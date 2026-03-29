@@ -65,6 +65,12 @@ if [[ "$LAYER" == "all" || "$LAYER" == "2" ]]; then
         exit 1
     fi
 
+    # 数据准备（如果还没跑过）
+    if [[ ! -f "$PROJECT_DIR/data/real_texts.json" ]]; then
+        echo ">>> 准备数据（WikiText-103 → 128-token 块）..."
+        python "$PROJECT_DIR/src/setup/prepare_data.py"
+    fi
+
     N_GPUS=$(python -c "import torch; print(torch.cuda.device_count())")
     python -c "
 import torch
