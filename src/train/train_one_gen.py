@@ -35,8 +35,8 @@ def finetune(
     output_dir: str,
     *,
     epochs: int       = 1,
-    batch_size: int   = 8,
-    grad_accum: int   = 4,
+    batch_size: int   = 4,
+    grad_accum: int   = 8,
     lr: float         = 2e-5,
     max_length: int   = 128,
     warmup_steps: int = 100,
@@ -146,7 +146,7 @@ def generate_samples(
     temperature: float = 0.9,
     top_p: float       = 0.9,
     max_length: int    = 128,
-    gen_batch: int     = 16,
+    gen_batch: int     = 8,
 ) -> list:
     """
     prompt-completion 生成模式（对齐 Dohmatob ICML24）：
@@ -227,8 +227,8 @@ def main():
     parser.add_argument("--output-dir",   required=True)
     parser.add_argument("--n-gen",        type=int,   default=2000)
     parser.add_argument("--epochs",       type=int,   default=1)
-    parser.add_argument("--batch",        type=int,   default=8)
-    parser.add_argument("--grad-accum",   type=int,   default=4)
+    parser.add_argument("--batch",        type=int,   default=4)
+    parser.add_argument("--grad-accum",   type=int,   default=8)
     parser.add_argument("--lr",           type=float, default=2e-5)
     parser.add_argument("--max-length",   type=int,   default=128)
     parser.add_argument("--temperature",  type=float, default=0.9)
