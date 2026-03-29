@@ -70,7 +70,7 @@ if [[ "$LAYER" == "all" || "$LAYER" == "2" ]]; then
 import torch
 for i in range(torch.cuda.device_count()):
     props = torch.cuda.get_device_properties(i)
-    print(f'  GPU {i}: {props.name}, VRAM: {props.total_mem/1024**3:.1f}GB')
+    print(f'  GPU {i}: {props.name}, VRAM: {props.total_memory/1024**3:.1f}GB')
 "
     mkdir -p "$PROJECT_DIR/results/exp2"
 
