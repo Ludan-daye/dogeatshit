@@ -10,6 +10,14 @@ echo "========================================="
 echo "  IQD 实验环境搭建"
 echo "========================================="
 
+# ── 0. Llama2 模型访问提示 ─────────────────────────────────────────────
+echo ""
+echo "[提示] 本项目使用 meta-llama/Llama-2-7b-hf 模型。"
+echo "  请确保已完成以下步骤："
+echo "  1. 在 https://huggingface.co/meta-llama/Llama-2-7b-hf 申请访问权限"
+echo "  2. 运行 huggingface-cli login 登录你的 HuggingFace 账号"
+echo ""
+
 # ── 1. 选择 pip 镜像源 ──────────────────────────────────────────────────
 echo ""
 echo "选择 pip 镜像源："
@@ -165,6 +173,8 @@ import mauve
 print('MAUVE:          OK')
 import transformers
 print(f'Transformers:   {transformers.__version__}')
+import peft
+print(f'PEFT:           {peft.__version__}')
 print()
 print('所有依赖安装成功!')
 "

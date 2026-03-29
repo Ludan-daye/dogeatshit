@@ -107,11 +107,13 @@ def run_chain(row: dict, run_dir: Path) -> Path:
     if not (gen0_dir / "config.json").exists():
         print(f"\n[{exp_id}] Gen 0 初始训练")
         with Timer("Gen 0 fine-tune"):
-            finetune(model, d0_texts, str(gen0_dir), seed=seed)
+            finetune(model, d0_texts, str(gen0_dir), seed=seed,
+                     max_length=128, use_lora=True)
 
     if not gen0_samples.exists():
         with Timer("Gen 0 生成"):
-            samp = generate_samples(str(gen0_dir), n_train)
+            samp = generate_samples(str(gen0_dir), n_train,
+                                    prompt_texts=d0_texts, max_length=128)
         with open(gen0_samples, "w") as f:
             json.dump(samp, f)
     else:
@@ -157,10 +159,12 @@ def run_chain(row: dict, run_dir: Path) -> Path:
             train_texts = mix_data(all_syn,  real_texts, p_syn)[:n_train]
 
         with Timer(f"[{exp_id}] Gen {gen} fine-tune"):
-            finetune(prev_dir, train_texts, str(gen_dir), seed=seed)
+            finetune(prev_dir, train_texts, str(gen_dir), seed=seed,
+                     max_length=128, use_lora=True)
 
         with Timer(f"[{exp_id}] Gen {gen} 生成"):
-            prev_samp = generate_samples(str(gen_dir), n_train)
+            prev_samp = generate_samples(str(gen_dir), n_train,
+                                         prompt_texts=train_texts, max_length=128)
 
         with open(gen_samples, "w") as f:
             json.dump(prev_samp, f)

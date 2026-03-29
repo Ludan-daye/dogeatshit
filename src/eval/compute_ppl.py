@@ -12,7 +12,7 @@ from src.utils import clear_gpu_memory
 
 
 def compute_ppl_on_texts(model_path: str, texts: list,
-                         max_length: int = 256) -> float:
+                         max_length: int = 128) -> float:
     from transformers import AutoTokenizer, AutoModelForCausalLM
 
     device = "cuda" if torch.cuda.is_available() else "cpu"

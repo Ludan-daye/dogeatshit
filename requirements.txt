@@ -8,5 +8,7 @@ torch>=2.1
 transformers>=4.35
 datasets>=2.14
 accelerate>=0.24
+peft>=0.7.0
+bitsandbytes>=0.41.0
 pandas>=2.0
 tqdm

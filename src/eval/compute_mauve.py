@@ -12,7 +12,7 @@ from src.utils import clear_gpu_memory
 
 
 def compute_mauve_score(ref_texts: list, gen_texts: list,
-                        device_id: int = 0, max_len: int = 256) -> float:
+                        device_id: int = 0, max_len: int = 128) -> float:
     """
     ref_texts : 真实文本列表（分布锚点）
     gen_texts : 模型生成文本列表
