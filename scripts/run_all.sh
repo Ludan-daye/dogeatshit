@@ -53,7 +53,7 @@ if [[ "$LAYER" == "all" || "$LAYER" == "1" ]]; then
     echo "========================================="
 fi
 
-# 第二层：LLM实验（GPU）
+# 第二层：LLM实验（GPU，多卡并行）
 if [[ "$LAYER" == "all" || "$LAYER" == "2" ]]; then
     echo ""
     echo ">>> 第二层：LLM多代崩溃 (GPU)"
@@ -65,9 +65,34 @@ if [[ "$LAYER" == "all" || "$LAYER" == "2" ]]; then
         exit 1
     fi
 
-    python -c "import torch; print(f'GPU: {torch.cuda.get_device_name(0)}, VRAM: {torch.cuda.get_device_properties(0).total_mem/1024**3:.1f}GB')"
+    N_GPUS=$(python -c "import torch; print(torch.cuda.device_count())")
+    python -c "
+import torch
+for i in range(torch.cuda.device_count()):
+    props = torch.cuda.get_device_properties(i)
+    print(f'  GPU {i}: {props.name}, VRAM: {props.total_mem/1024**3:.1f}GB')
+"
+    mkdir -p "$PROJECT_DIR/results/exp2"
 
-    python exp2_llm_collapse.py --exp "$SUB_EXP"
+    if [[ "$SUB_EXP" == "all" && "$N_GPUS" -ge 2 ]]; then
+        echo ">>> 双卡并行模式 ($N_GPUS GPUs)"
+        CUDA_VISIBLE_DEVICES=0 python exp2_llm_collapse.py --exp 2a \
+            > "$PROJECT_DIR/results/exp2/log_2a.txt" 2>&1 &
+        CUDA_VISIBLE_DEVICES=1 python exp2_llm_collapse.py --exp 2b \
+            > "$PROJECT_DIR/results/exp2/log_2b.txt" 2>&1 &
+        wait
+        echo ">>> 2a, 2b 完成"
+
+        CUDA_VISIBLE_DEVICES=0 python exp2_llm_collapse.py --exp 2c \
+            > "$PROJECT_DIR/results/exp2/log_2c.txt" 2>&1 &
+        CUDA_VISIBLE_DEVICES=1 python exp2_llm_collapse.py --exp 2d \
+            > "$PROJECT_DIR/results/exp2/log_2d.txt" 2>&1 &
+        wait
+        echo ">>> 2c, 2d 完成"
+    else
+        python exp2_llm_collapse.py --exp "$SUB_EXP"
+    fi
+
     echo ""
     echo ">>> 第二层完成!"
     echo ">>> 检查 results/exp2/ 中的结果"
