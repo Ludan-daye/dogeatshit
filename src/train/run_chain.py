@@ -89,8 +89,8 @@ def run_chain(row: dict, run_dir: Path) -> Path:
     with open(DATA_DIR / "train_texts.json") as f:
         d0_texts = json.load(f)[:n_train]
 
-    mauve_ref = real_texts[:2000]
-    ppl_ref   = real_texts[:500]
+    mauve_ref = real_texts[:5000]
+    ppl_ref   = real_texts[:1000]
 
     # ── 已记录的代数（用于断点续跑）──
     logged_gens = set()
@@ -123,9 +123,9 @@ def run_chain(row: dict, run_dir: Path) -> Path:
     all_syn = list(samp)  # accumulate 模式用
 
     if 0 not in logged_gens:
-        mauve_0 = compute_mauve_score(mauve_ref, samp[:2000])
+        mauve_0 = compute_mauve_score(mauve_ref, samp[:5000])
         ppl_0   = compute_ppl_on_texts(str(gen0_dir), ppl_ref)
-        rep_0   = compute_repetition_rate(samp[:1000])
+        rep_0   = compute_repetition_rate(samp[:2000])
         _append_metrics(metrics_path, {
             "gen": 0, "exp_id": exp_id,
             "model": model, "p_syn": p_syn, "n_train": n_train,
@@ -174,11 +174,11 @@ def run_chain(row: dict, run_dir: Path) -> Path:
 
         # 评估
         with Timer(f"[{exp_id}] Gen {gen} MAUVE"):
-            mauve_k = compute_mauve_score(mauve_ref, prev_samp[:2000])
+            mauve_k = compute_mauve_score(mauve_ref, prev_samp[:5000])
         clear_gpu_memory()
 
         ppl_k = compute_ppl_on_texts(str(gen_dir), ppl_ref)
-        rep_k = compute_repetition_rate(prev_samp[:1000])
+        rep_k = compute_repetition_rate(prev_samp[:2000])
 
         _append_metrics(metrics_path, {
             "gen": gen, "exp_id": exp_id,

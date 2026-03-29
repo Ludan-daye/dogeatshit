@@ -35,8 +35,8 @@ def finetune(
     output_dir: str,
     *,
     epochs: int       = 1,
-    batch_size: int   = 2,
-    grad_accum: int   = 16,
+    batch_size: int   = 8,
+    grad_accum: int   = 4,
     lr: float         = 2e-5,
     max_length: int   = 128,
     warmup_steps: int = 100,
@@ -58,7 +58,8 @@ def finetune(
 
     model = AutoModelForCausalLM.from_pretrained(
         prev_model,
-        torch_dtype=torch.float16 if device == "cuda" else torch.float32,
+        torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
+        attn_implementation="flash_attention_2" if device == "cuda" else None,
     )
 
     # ── LoRA ──
@@ -104,7 +105,7 @@ def finetune(
         num_train_epochs=epochs,
         per_device_train_batch_size=batch_size,
         gradient_accumulation_steps=grad_accum,
-        fp16=(device == "cuda"),
+        bf16=(device == "cuda"),
         learning_rate=lr,
         warmup_steps=warmup_steps,
         logging_steps=50,
@@ -112,7 +113,7 @@ def finetune(
         seed=seed,
         report_to="none",
         dataloader_num_workers=0,
-        gradient_checkpointing=use_lora,
+        gradient_checkpointing=False,
     )
 
     trainer = Trainer(
@@ -145,7 +146,7 @@ def generate_samples(
     temperature: float = 0.9,
     top_p: float       = 0.9,
     max_length: int    = 128,
-    gen_batch: int     = 4,
+    gen_batch: int     = 16,
 ) -> list:
     """
     prompt-completion 生成模式（对齐 Dohmatob ICML24）：
@@ -160,7 +161,8 @@ def generate_samples(
         tokenizer.pad_token = tokenizer.eos_token
     model = AutoModelForCausalLM.from_pretrained(
         model_path,
-        torch_dtype=torch.float16 if device == "cuda" else torch.float32,
+        torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
+        attn_implementation="flash_attention_2" if device == "cuda" else None,
     ).to(device)
     model.eval()
 
@@ -225,8 +227,8 @@ def main():
     parser.add_argument("--output-dir",   required=True)
     parser.add_argument("--n-gen",        type=int,   default=2000)
     parser.add_argument("--epochs",       type=int,   default=1)
-    parser.add_argument("--batch",        type=int,   default=2)
-    parser.add_argument("--grad-accum",   type=int,   default=16)
+    parser.add_argument("--batch",        type=int,   default=8)
+    parser.add_argument("--grad-accum",   type=int,   default=4)
     parser.add_argument("--lr",           type=float, default=2e-5)
     parser.add_argument("--max-length",   type=int,   default=128)
     parser.add_argument("--temperature",  type=float, default=0.9)

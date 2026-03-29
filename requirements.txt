@@ -10,5 +10,6 @@ datasets>=2.14
 accelerate>=0.24
 peft>=0.7.0
 bitsandbytes>=0.41.0
+flash-attn>=2.5.0
 pandas>=2.0
 tqdm
