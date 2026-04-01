@@ -41,6 +41,7 @@ The main experiment system. All runs are parameterized via `experiments/configs/
 - `exp7a/7b`: Mistral-7B α sweeps (p_syn with 6 levels incl. 0.0, model size comparison)
 - `exp8`: Cross-dataset — Mistral-7B on C4 and WikiText-103
 - `exp9`: Cross-architecture — GPT-2 vs Mistral-7B on C4
+- `exp10`: Single-gen p_syn sweep — pre-existing AI data (Cosmopedia/GPT-wiki) mixed with real data, 8 p_syn levels × 3 seeds
 
 **Key design patterns:**
 - Each run outputs to `results/<group>/<exp_id>/` with `metrics.jsonl`, `models/gen_k/`, `samples/gen_k.json`
@@ -83,6 +84,13 @@ python experiments/setup/prepare_data_multi.py --dataset c4     # C4 only
 python experiments/analysis/plot_results.py --exp-dir results/exp1 --subdir exp1 --plot delta
 python experiments/analysis/fit_transfer_fn.py --results-dirs results/exp1/*/ --subdir exp2
 python experiments/analysis/compare_models.py --plot all        # cross-model/dataset comparison
+
+# Exp10: single-gen p_syn sweep with pre-existing AI datasets
+python src/setup/prepare_data_synthetic.py --dataset cosmopedia  # download Cosmopedia
+python src/setup/prepare_data_synthetic.py --dataset gptwiki     # download GPT-wiki-intro
+bash scripts/run_exp10.sh                                        # run all exp10
+python src/train/run_single_gen.py --exp-id exp10_001 --grid src/configs/experiment_grid_exp10.csv
+python src/analysis/plot_single_gen.py --exp-dir results/exp10 --plot all
 ```
 
 ## Environment Notes

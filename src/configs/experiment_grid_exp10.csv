@@ -1,0 +1,25 @@
+exp_id,group,model,dataset,syn_source,p_syn,n_train,seed,notes
+exp10_001,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.0,5000,42,baseline pure real
+exp10_002,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.0,5000,123,baseline pure real
+exp10_003,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.0,5000,456,baseline pure real
+exp10_004,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.1,5000,42,10% synthetic
+exp10_005,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.1,5000,123,10% synthetic
+exp10_006,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.1,5000,456,10% synthetic
+exp10_007,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.25,5000,42,25% synthetic
+exp10_008,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.25,5000,123,25% synthetic
+exp10_009,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.25,5000,456,25% synthetic
+exp10_010,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.38,5000,42,golden ratio anchor
+exp10_011,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.38,5000,123,golden ratio anchor
+exp10_012,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.38,5000,456,golden ratio anchor
+exp10_013,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.5,5000,42,50% synthetic
+exp10_014,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.5,5000,123,50% synthetic
+exp10_015,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.5,5000,456,50% synthetic
+exp10_016,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.75,5000,42,75% synthetic
+exp10_017,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.75,5000,123,75% synthetic
+exp10_018,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.75,5000,456,75% synthetic
+exp10_019,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.9,5000,42,90% synthetic
+exp10_020,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.9,5000,123,90% synthetic
+exp10_021,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,0.9,5000,456,90% synthetic
+exp10_022,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,1.0,5000,42,pure synthetic
+exp10_023,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,1.0,5000,123,pure synthetic
+exp10_024,exp10,mistralai/Mistral-7B-v0.1,owt,cosmopedia,1.0,5000,456,pure synthetic

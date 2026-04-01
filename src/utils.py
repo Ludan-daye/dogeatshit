@@ -50,6 +50,24 @@ def save_fig(fig, name, subdir=''):
     return path
 
 
+# ============ 数据混合 ============
+
+def mix_data(syn_texts: list, real_texts: list, p_syn: float) -> list:
+    """
+    p_syn: synthetic 占比 (0~1)
+    返回混合后打乱的文本列表
+    """
+    if p_syn >= 1.0:
+        mixed = list(syn_texts)
+    else:
+        n     = min(len(real_texts), len(syn_texts)) if syn_texts else len(real_texts)
+        n_syn  = int(n * p_syn)
+        n_real = n - n_syn
+        mixed  = real_texts[:n_real] + syn_texts[:n_syn]
+    np.random.shuffle(mixed)
+    return mixed
+
+
 # ============ MAUVE 相关 ============
 
 def compute_mauve_score(p_texts, q_texts, device_id=0, max_len=256):
