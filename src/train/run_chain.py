@@ -21,11 +21,11 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.train.train_one_gen import finetune, generate_samples
-from src.eval.compute_mauve  import compute_mauve_score, delta_k
-from src.eval.compute_ppl    import compute_ppl_on_texts
-from src.eval.compute_diversity import compute_repetition_rate
-from src.utils import Timer, clear_gpu_memory
+from experiments.train.train_one_gen import finetune, generate_samples
+from experiments.eval.compute_mauve  import compute_mauve_score, delta_k
+from experiments.eval.compute_ppl    import compute_ppl_on_texts
+from experiments.eval.compute_diversity import compute_repetition_rate
+from experiments.utils import Timer, clear_gpu_memory
 
 DATA_DIR    = PROJECT_ROOT / "data"
 RESULTS_DIR = PROJECT_ROOT / "results"
@@ -83,14 +83,22 @@ def run_chain(row: dict, run_dir: Path) -> Path:
     (run_dir / "samples").mkdir(exist_ok=True)
     metrics_path = run_dir / "metrics.jsonl"
 
-    # ── 加载数据 ──
-    with open(DATA_DIR / "real_texts.json") as f:
+    # ── 加载数据（支持多数据集）──
+    dataset = row.get("dataset", "owt")
+    dataset_files = {
+        "owt":  ("real_texts.json",      "train_texts.json"),
+        "c4":   ("c4_real_texts.json",   "c4_train_texts.json"),
+        "wiki": ("wiki_real_texts.json", "wiki_train_texts.json"),
+    }
+    real_file, train_file = dataset_files[dataset]
+
+    with open(DATA_DIR / real_file) as f:
         real_texts = json.load(f)
-    with open(DATA_DIR / "train_texts.json") as f:
+    with open(DATA_DIR / train_file) as f:
         d0_texts = json.load(f)[:n_train]
 
-    mauve_ref = real_texts[:5000]
-    ppl_ref   = real_texts[:1000]
+    mauve_ref = real_texts[:2000]
+    ppl_ref   = real_texts[:500]
 
     # ── 已记录的代数（用于断点续跑）──
     logged_gens = set()
@@ -107,13 +115,11 @@ def run_chain(row: dict, run_dir: Path) -> Path:
     if not (gen0_dir / "config.json").exists():
         print(f"\n[{exp_id}] Gen 0 初始训练")
         with Timer("Gen 0 fine-tune"):
-            finetune(model, d0_texts, str(gen0_dir), seed=seed,
-                     max_length=128, use_lora=True)
+            finetune(model, d0_texts, str(gen0_dir), seed=seed)
 
     if not gen0_samples.exists():
         with Timer("Gen 0 生成"):
-            samp = generate_samples(str(gen0_dir), n_train,
-                                    prompt_texts=d0_texts, max_length=128)
+            samp = generate_samples(str(gen0_dir), n_train)
         with open(gen0_samples, "w") as f:
             json.dump(samp, f)
     else:
@@ -123,9 +129,9 @@ def run_chain(row: dict, run_dir: Path) -> Path:
     all_syn = list(samp)  # accumulate 模式用
 
     if 0 not in logged_gens:
-        mauve_0 = compute_mauve_score(mauve_ref, samp[:5000])
+        mauve_0 = compute_mauve_score(mauve_ref, samp[:2000])
         ppl_0   = compute_ppl_on_texts(str(gen0_dir), ppl_ref)
-        rep_0   = compute_repetition_rate(samp[:2000])
+        rep_0   = compute_repetition_rate(samp[:1000])
         _append_metrics(metrics_path, {
             "gen": 0, "exp_id": exp_id,
             "model": model, "p_syn": p_syn, "n_train": n_train,
@@ -159,12 +165,10 @@ def run_chain(row: dict, run_dir: Path) -> Path:
             train_texts = mix_data(all_syn,  real_texts, p_syn)[:n_train]
 
         with Timer(f"[{exp_id}] Gen {gen} fine-tune"):
-            finetune(prev_dir, train_texts, str(gen_dir), seed=seed,
-                     max_length=128, use_lora=True)
+            finetune(prev_dir, train_texts, str(gen_dir), seed=seed)
 
         with Timer(f"[{exp_id}] Gen {gen} 生成"):
-            prev_samp = generate_samples(str(gen_dir), n_train,
-                                         prompt_texts=train_texts, max_length=128)
+            prev_samp = generate_samples(str(gen_dir), n_train)
 
         with open(gen_samples, "w") as f:
             json.dump(prev_samp, f)
@@ -174,11 +178,11 @@ def run_chain(row: dict, run_dir: Path) -> Path:
 
         # 评估
         with Timer(f"[{exp_id}] Gen {gen} MAUVE"):
-            mauve_k = compute_mauve_score(mauve_ref, prev_samp[:5000])
+            mauve_k = compute_mauve_score(mauve_ref, prev_samp[:2000])
         clear_gpu_memory()
 
         ppl_k = compute_ppl_on_texts(str(gen_dir), ppl_ref)
-        rep_k = compute_repetition_rate(prev_samp[:2000])
+        rep_k = compute_repetition_rate(prev_samp[:1000])
 
         _append_metrics(metrics_path, {
             "gen": gen, "exp_id": exp_id,

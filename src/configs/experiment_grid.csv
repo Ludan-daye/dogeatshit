@@ -1,34 +1,102 @@
-exp_id,group,model,p_syn,n_train,k_max,strategy,seed,notes
-exp1_r_001,exp1,meta-llama/Llama-2-7b-hf,1.0,5000,10,replace,42,基准崩溃链
-exp1_r_002,exp1,meta-llama/Llama-2-7b-hf,1.0,5000,10,replace,123,基准崩溃链
-exp1_r_003,exp1,meta-llama/Llama-2-7b-hf,1.0,5000,10,replace,456,基准崩溃链
-exp1_a_001,exp1,meta-llama/Llama-2-7b-hf,1.0,5000,10,accumulate,42,基准崩溃链
-exp1_a_002,exp1,meta-llama/Llama-2-7b-hf,1.0,5000,10,accumulate,123,基准崩溃链
-exp1_a_003,exp1,meta-llama/Llama-2-7b-hf,1.0,5000,10,accumulate,456,基准崩溃链
-exp3a_001,exp3a,meta-llama/Llama-2-7b-hf,0.10,5000,8,replace,42,p扫描
-exp3a_002,exp3a,meta-llama/Llama-2-7b-hf,0.10,5000,8,replace,123,p扫描
-exp3a_003,exp3a,meta-llama/Llama-2-7b-hf,0.10,5000,8,replace,456,p扫描
-exp3a_004,exp3a,meta-llama/Llama-2-7b-hf,0.50,5000,8,replace,42,p扫描
-exp3a_005,exp3a,meta-llama/Llama-2-7b-hf,0.50,5000,8,replace,123,p扫描
-exp3a_006,exp3a,meta-llama/Llama-2-7b-hf,0.50,5000,8,replace,456,p扫描
-exp3a_007,exp3a,meta-llama/Llama-2-7b-hf,1.00,5000,8,replace,42,p扫描
-exp3a_008,exp3a,meta-llama/Llama-2-7b-hf,1.00,5000,8,replace,123,p扫描
-exp3a_009,exp3a,meta-llama/Llama-2-7b-hf,1.00,5000,8,replace,456,p扫描
-exp3b_001,exp3b,meta-llama/Llama-2-7b-hf,1.0,500,8,replace,42,n扫描
-exp3b_002,exp3b,meta-llama/Llama-2-7b-hf,1.0,500,8,replace,123,n扫描
-exp3b_003,exp3b,meta-llama/Llama-2-7b-hf,1.0,500,8,replace,456,n扫描
-exp3b_004,exp3b,meta-llama/Llama-2-7b-hf,1.0,5000,8,replace,42,n扫描
-exp3b_005,exp3b,meta-llama/Llama-2-7b-hf,1.0,5000,8,replace,123,n扫描
-exp3b_006,exp3b,meta-llama/Llama-2-7b-hf,1.0,5000,8,replace,456,n扫描
-exp3b_007,exp3b,meta-llama/Llama-2-7b-hf,1.0,10000,8,replace,42,n扫描
-exp3b_008,exp3b,meta-llama/Llama-2-7b-hf,1.0,10000,8,replace,123,n扫描
-exp3b_009,exp3b,meta-llama/Llama-2-7b-hf,1.0,10000,8,replace,456,n扫描
-exp5_001,exp5,meta-llama/Llama-2-7b-hf,0.25,500,8,replace,42,崩溃阈值IQD*
-exp5_002,exp5,meta-llama/Llama-2-7b-hf,0.25,5000,8,replace,42,崩溃阈值IQD*
-exp5_003,exp5,meta-llama/Llama-2-7b-hf,0.25,10000,8,replace,42,崩溃阈值IQD*
-exp5_004,exp5,meta-llama/Llama-2-7b-hf,0.50,500,8,replace,42,崩溃阈值IQD*
-exp5_005,exp5,meta-llama/Llama-2-7b-hf,0.50,5000,8,replace,42,崩溃阈值IQD*
-exp5_006,exp5,meta-llama/Llama-2-7b-hf,0.50,10000,8,replace,42,崩溃阈值IQD*
-exp5_007,exp5,meta-llama/Llama-2-7b-hf,1.00,500,8,replace,42,崩溃阈值IQD*
-exp5_008,exp5,meta-llama/Llama-2-7b-hf,1.00,5000,8,replace,42,崩溃阈值IQD*
-exp5_009,exp5,meta-llama/Llama-2-7b-hf,1.00,10000,8,replace,42,崩溃阈值IQD*
+exp_id,group,model,dataset,p_syn,n_train,k_max,strategy,seed,notes
+exp1_r_001,exp1,gpt2,owt,1.0,5000,15,replace,42,基准崩溃链
+exp1_r_002,exp1,gpt2,owt,1.0,5000,15,replace,123,基准崩溃链
+exp1_r_003,exp1,gpt2,owt,1.0,5000,15,replace,456,基准崩溃链
+exp1_r_004,exp1,gpt2,owt,1.0,5000,15,replace,789,基准崩溃链
+exp1_r_005,exp1,gpt2,owt,1.0,5000,15,replace,1024,基准崩溃链
+exp1_a_001,exp1,gpt2,owt,1.0,5000,15,accumulate,42,基准崩溃链
+exp1_a_002,exp1,gpt2,owt,1.0,5000,15,accumulate,123,基准崩溃链
+exp1_a_003,exp1,gpt2,owt,1.0,5000,15,accumulate,456,基准崩溃链
+exp1_a_004,exp1,gpt2,owt,1.0,5000,15,accumulate,789,基准崩溃链
+exp1_a_005,exp1,gpt2,owt,1.0,5000,15,accumulate,1024,基准崩溃链
+exp3a_001,exp3a,gpt2,owt,0.10,5000,8,replace,42,p扫描
+exp3a_002,exp3a,gpt2,owt,0.10,5000,8,replace,123,p扫描
+exp3a_003,exp3a,gpt2,owt,0.10,5000,8,replace,456,p扫描
+exp3a_004,exp3a,gpt2,owt,0.25,5000,8,replace,42,p扫描
+exp3a_005,exp3a,gpt2,owt,0.25,5000,8,replace,123,p扫描
+exp3a_006,exp3a,gpt2,owt,0.25,5000,8,replace,456,p扫描
+exp3a_007,exp3a,gpt2,owt,0.50,5000,8,replace,42,p扫描
+exp3a_008,exp3a,gpt2,owt,0.50,5000,8,replace,123,p扫描
+exp3a_009,exp3a,gpt2,owt,0.50,5000,8,replace,456,p扫描
+exp3a_010,exp3a,gpt2,owt,0.75,5000,8,replace,42,p扫描
+exp3a_011,exp3a,gpt2,owt,0.75,5000,8,replace,123,p扫描
+exp3a_012,exp3a,gpt2,owt,0.75,5000,8,replace,456,p扫描
+exp3a_013,exp3a,gpt2,owt,1.00,5000,8,replace,42,p扫描
+exp3a_014,exp3a,gpt2,owt,1.00,5000,8,replace,123,p扫描
+exp3a_015,exp3a,gpt2,owt,1.00,5000,8,replace,456,p扫描
+exp3b_001,exp3b,gpt2,owt,1.0,500,8,replace,42,n扫描
+exp3b_002,exp3b,gpt2,owt,1.0,500,8,replace,123,n扫描
+exp3b_003,exp3b,gpt2,owt,1.0,500,8,replace,456,n扫描
+exp3b_004,exp3b,gpt2,owt,1.0,2000,8,replace,42,n扫描
+exp3b_005,exp3b,gpt2,owt,1.0,2000,8,replace,123,n扫描
+exp3b_006,exp3b,gpt2,owt,1.0,2000,8,replace,456,n扫描
+exp3b_007,exp3b,gpt2,owt,1.0,10000,8,replace,42,n扫描
+exp3b_008,exp3b,gpt2,owt,1.0,10000,8,replace,123,n扫描
+exp3b_009,exp3b,gpt2,owt,1.0,10000,8,replace,456,n扫描
+exp3c_001,exp3c,gpt2,owt,1.0,5000,8,replace,42,模型大小对照
+exp3c_002,exp3c,gpt2,owt,1.0,5000,8,replace,123,模型大小对照
+exp3c_003,exp3c,gpt2,owt,1.0,5000,8,replace,456,模型大小对照
+exp3c_004,exp3c,gpt2-medium,owt,1.0,5000,8,replace,42,模型大小对照
+exp3c_005,exp3c,gpt2-medium,owt,1.0,5000,8,replace,123,模型大小对照
+exp3c_006,exp3c,gpt2-medium,owt,1.0,5000,8,replace,456,模型大小对照
+exp4_001,exp4,gpt2,owt,1.0,5000,3,replace,42,IQD等价性验证
+exp4_002,exp4,gpt2,owt,1.0,5000,3,replace,123,IQD等价性验证
+exp4_003,exp4,gpt2,owt,1.0,5000,3,replace,456,IQD等价性验证
+exp5_001,exp5,gpt2,owt,0.25,500,10,replace,42,崩溃阈值IQD*
+exp5_002,exp5,gpt2,owt,0.25,2000,10,replace,42,崩溃阈值IQD*
+exp5_003,exp5,gpt2,owt,0.25,5000,10,replace,42,崩溃阈值IQD*
+exp5_004,exp5,gpt2,owt,0.25,10000,10,replace,42,崩溃阈值IQD*
+exp5_005,exp5,gpt2,owt,0.50,500,10,replace,42,崩溃阈值IQD*
+exp5_006,exp5,gpt2,owt,0.50,2000,10,replace,42,崩溃阈值IQD*
+exp5_007,exp5,gpt2,owt,0.50,5000,10,replace,42,崩溃阈值IQD*
+exp5_008,exp5,gpt2,owt,0.50,10000,10,replace,42,崩溃阈值IQD*
+exp5_009,exp5,gpt2,owt,0.75,500,10,replace,42,崩溃阈值IQD*
+exp5_010,exp5,gpt2,owt,0.75,2000,10,replace,42,崩溃阈值IQD*
+exp5_011,exp5,gpt2,owt,0.75,5000,10,replace,42,崩溃阈值IQD*
+exp5_012,exp5,gpt2,owt,0.75,10000,10,replace,42,崩溃阈值IQD*
+exp5_013,exp5,gpt2,owt,1.00,500,10,replace,42,崩溃阈值IQD*
+exp5_014,exp5,gpt2,owt,1.00,2000,10,replace,42,崩溃阈值IQD*
+exp5_015,exp5,gpt2,owt,1.00,5000,10,replace,42,崩溃阈值IQD*
+exp5_016,exp5,gpt2,owt,1.00,10000,10,replace,42,崩溃阈值IQD*
+exp6_r_001,exp6,mistralai/Mistral-7B-v0.1,owt,1.0,5000,10,replace,42,Llama3B基准崩溃链
+exp6_r_002,exp6,mistralai/Mistral-7B-v0.1,owt,1.0,5000,10,replace,123,Llama3B基准崩溃链
+exp6_r_003,exp6,mistralai/Mistral-7B-v0.1,owt,1.0,5000,10,replace,456,Llama3B基准崩溃链
+exp6_a_001,exp6,mistralai/Mistral-7B-v0.1,owt,1.0,5000,10,accumulate,42,Llama3B基准崩溃链
+exp6_a_002,exp6,mistralai/Mistral-7B-v0.1,owt,1.0,5000,10,accumulate,123,Llama3B基准崩溃链
+exp6_a_003,exp6,mistralai/Mistral-7B-v0.1,owt,1.0,5000,10,accumulate,456,Llama3B基准崩溃链
+exp7a_001,exp7a,mistralai/Mistral-7B-v0.1,owt,0.00,5000,8,replace,42,Llama p扫描
+exp7a_002,exp7a,mistralai/Mistral-7B-v0.1,owt,0.00,5000,8,replace,123,Llama p扫描
+exp7a_003,exp7a,mistralai/Mistral-7B-v0.1,owt,0.00,5000,8,replace,456,Llama p扫描
+exp7a_004,exp7a,mistralai/Mistral-7B-v0.1,owt,0.10,5000,8,replace,42,Llama p扫描
+exp7a_005,exp7a,mistralai/Mistral-7B-v0.1,owt,0.10,5000,8,replace,123,Llama p扫描
+exp7a_006,exp7a,mistralai/Mistral-7B-v0.1,owt,0.10,5000,8,replace,456,Llama p扫描
+exp7a_007,exp7a,mistralai/Mistral-7B-v0.1,owt,0.25,5000,8,replace,42,Llama p扫描
+exp7a_008,exp7a,mistralai/Mistral-7B-v0.1,owt,0.25,5000,8,replace,123,Llama p扫描
+exp7a_009,exp7a,mistralai/Mistral-7B-v0.1,owt,0.25,5000,8,replace,456,Llama p扫描
+exp7a_010,exp7a,mistralai/Mistral-7B-v0.1,owt,0.50,5000,8,replace,42,Llama p扫描
+exp7a_011,exp7a,mistralai/Mistral-7B-v0.1,owt,0.50,5000,8,replace,123,Llama p扫描
+exp7a_012,exp7a,mistralai/Mistral-7B-v0.1,owt,0.50,5000,8,replace,456,Llama p扫描
+exp7a_013,exp7a,mistralai/Mistral-7B-v0.1,owt,0.75,5000,8,replace,42,Llama p扫描
+exp7a_014,exp7a,mistralai/Mistral-7B-v0.1,owt,0.75,5000,8,replace,123,Llama p扫描
+exp7a_015,exp7a,mistralai/Mistral-7B-v0.1,owt,0.75,5000,8,replace,456,Llama p扫描
+exp7a_016,exp7a,mistralai/Mistral-7B-v0.1,owt,1.00,5000,8,replace,42,Llama p扫描
+exp7a_017,exp7a,mistralai/Mistral-7B-v0.1,owt,1.00,5000,8,replace,123,Llama p扫描
+exp7a_018,exp7a,mistralai/Mistral-7B-v0.1,owt,1.00,5000,8,replace,456,Llama p扫描
+exp7b_001,exp7b,gpt2-medium,owt,1.0,5000,8,replace,42,Llama模型大小对照
+exp7b_002,exp7b,gpt2-medium,owt,1.0,5000,8,replace,123,Llama模型大小对照
+exp7b_003,exp7b,gpt2-medium,owt,1.0,5000,8,replace,456,Llama模型大小对照
+exp7b_004,exp7b,mistralai/Mistral-7B-v0.1,owt,1.0,5000,8,replace,42,Llama模型大小对照
+exp7b_005,exp7b,mistralai/Mistral-7B-v0.1,owt,1.0,5000,8,replace,123,Llama模型大小对照
+exp7b_006,exp7b,mistralai/Mistral-7B-v0.1,owt,1.0,5000,8,replace,456,Llama模型大小对照
+exp8_001,exp8,mistralai/Mistral-7B-v0.1,c4,1.0,5000,8,replace,42,C4数据集
+exp8_002,exp8,mistralai/Mistral-7B-v0.1,c4,1.0,5000,8,replace,123,C4数据集
+exp8_003,exp8,mistralai/Mistral-7B-v0.1,c4,1.0,5000,8,replace,456,C4数据集
+exp8_004,exp8,mistralai/Mistral-7B-v0.1,wiki,1.0,5000,8,replace,42,Wiki数据集
+exp8_005,exp8,mistralai/Mistral-7B-v0.1,wiki,1.0,5000,8,replace,123,Wiki数据集
+exp8_006,exp8,mistralai/Mistral-7B-v0.1,wiki,1.0,5000,8,replace,456,Wiki数据集
+exp9_001,exp9,gpt2,c4,1.0,5000,8,replace,42,跨架构对比
+exp9_002,exp9,gpt2,c4,1.0,5000,8,replace,123,跨架构对比
+exp9_003,exp9,gpt2,c4,1.0,5000,8,replace,456,跨架构对比
+exp9_004,exp9,mistralai/Mistral-7B-v0.1,c4,1.0,5000,8,replace,42,跨架构对比
+exp9_005,exp9,mistralai/Mistral-7B-v0.1,c4,1.0,5000,8,replace,123,跨架构对比
+exp9_006,exp9,mistralai/Mistral-7B-v0.1,c4,1.0,5000,8,replace,456,跨架构对比
