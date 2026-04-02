@@ -1,0 +1,1 @@
+{"exp_id": "exp10_015", "model": "mistralai/Mistral-7B-v0.1", "dataset": "owt", "syn_source": "cosmopedia", "p_syn": 0.5, "n_train": 5000, "seed": 456, "mauve": 0.44670325544479106, "delta": 0.5532967445552089, "ppl_real": 14.608342994464408, "rep_rate": 0.02842874897828935}
