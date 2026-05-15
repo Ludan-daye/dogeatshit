@@ -3,3 +3,4 @@
 2026-05-15T16:28:54+08:00 skip gemma-2-9b-it; n30 result already exists
 2026-05-15T16:28:54+08:00 skip Qwen2.5-7B-Instruct; n30 result already exists
 2026-05-15T16:28:54+08:00 waiting for Yi-1.5-9B-Chat; safetensors=2
+2026-05-15T16:30:54+08:00 waiting for Yi-1.5-9B-Chat; safetensors=2
