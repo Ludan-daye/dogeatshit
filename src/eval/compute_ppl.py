@@ -22,7 +22,7 @@ def compute_ppl_on_texts(model_path: str, texts: list,
     model = AutoModelForCausalLM.from_pretrained(
         model_path,
         torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
-        attn_implementation="flash_attention_2" if device == "cuda" else None,
+        attn_implementation="sdpa" if device == "cuda" else None,
     ).to(device)
     model.eval()
 
