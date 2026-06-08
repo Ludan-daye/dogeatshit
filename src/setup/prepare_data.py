@@ -46,7 +46,8 @@ def main():
     # ── 加载 WikiText-103 ──
     print("[*] 加载 WikiText-103 ...")
     from datasets import load_dataset
-    dataset = load_dataset("wikitext", "wikitext-103-raw-v1", split="train")
+    # huggingface_hub >=1.0 requires namespaced repo id; canonical wikitext lives at Salesforce/wikitext
+    dataset = load_dataset("Salesforce/wikitext", "wikitext-103-raw-v1", split="train")
 
     # 过滤空行，拼接全部文本
     all_text = "\n\n".join(t for t in dataset["text"] if t.strip())
