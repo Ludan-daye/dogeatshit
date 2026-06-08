@@ -18,19 +18,19 @@ The project has a **three-layer experiment design** plus a newer **table-driven 
 
 ### Layer 0–2 (early experiments, `run_all.sh`)
 
-- **Layer 0** (`experiments/exp0_toy_function.py`): Toy math functions on CPU — validates δ accumulation basics
-- **Layer 1** (`experiments/exp1_linear_regression.py`): Linear regression + Gaussian — tests δ accumulation, double descent
-- **Layer 2** (`experiments/exp2_llm_collapse.py`): LLM multi-gen collapse — requires GPU
+- **Layer 0** (`src/exp0_toy_function.py`): Toy math functions on CPU — validates δ accumulation basics
+- **Layer 1** (`src/exp1_linear_regression.py`): Linear regression + Gaussian — tests δ accumulation, double descent
+- **Layer 2** (`src/exp2_llm_collapse.py`): LLM multi-gen collapse — requires GPU
 
 ### Table-driven LLM experiments (`run_llm_experiments.sh`)
 
-The main experiment system. All runs are parameterized via `experiments/configs/experiment_grid.csv` with columns: `exp_id, group, model, dataset, p_syn, n_train, k_max, strategy, seed, notes`.
+The main experiment system. All runs are parameterized via `src/configs/experiment_grid.csv` with columns: `exp_id, group, model, dataset, p_syn, n_train, k_max, strategy, seed, notes`.
 
 **Pipeline flow:**
-1. **Data prep** → `experiments/setup/prepare_data.py` (OpenWebText) and `prepare_data_multi.py` (C4, WikiText-103) → outputs to `data/`
-2. **Chain training** → `experiments/train/run_chain.py --exp-id <id> --grid <csv>` — runs a full k-generation chain for one grid row. Calls `train_one_gen.py` (fine-tune + generate) per generation
+1. **Data prep** → `src/setup/prepare_data.py` (OpenWebText) and `prepare_data_multi.py` (C4, WikiText-103) → outputs to `data/`
+2. **Chain training** → `src/train/run_chain.py --exp-id <id> --grid <csv>` — runs a full k-generation chain for one grid row. Calls `train_one_gen.py` (fine-tune + generate) per generation
 3. **Evaluation** (per generation, inline in run_chain) → MAUVE (δₖ = 1 − MAUVE), perplexity on real data, n-gram repetition rate. All metrics appended to `metrics.jsonl`
-4. **Analysis** → `experiments/analysis/fit_transfer_fn.py` (fits δₙ₊₁ = f(δₙ) with 4 candidate models, selects via AIC/BIC), `plot_results.py` (δ curves, α scans, collapse heatmaps), `compare_models.py` (cross-model/cross-dataset comparison with 4 plot types + summary table)
+4. **Analysis** → `src/analysis/fit_transfer_fn.py` (fits δₙ₊₁ = f(δₙ) with 4 candidate models, selects via AIC/BIC), `plot_results.py` (δ curves, α scans, collapse heatmaps), `compare_models.py` (cross-model/cross-dataset comparison with 4 plot types + summary table)
 
 **Experiment groups:**
 - `exp1`: GPT-2 baseline collapse chain (replace vs accumulate, 5 seeds, 15 gens)
@@ -70,20 +70,20 @@ bash run_llm_experiments.sh all        # run all groups
 bash run_llm_experiments.sh exp1       # run one group
 
 # Single experiment chain
-python experiments/train/run_chain.py --exp-id exp1_r_001 --grid experiments/configs/experiment_grid.csv
+python src/train/run_chain.py --exp-id exp1_r_001 --grid src/configs/experiment_grid.csv
 
 # Single generation (standalone)
-python experiments/train/train_one_gen.py --prev-model gpt2 --train-texts data/train_texts.json --output-dir results/test/gen_0
+python src/train/train_one_gen.py --prev-model gpt2 --train-texts data/train_texts.json --output-dir results/test/gen_0
 
 # Data preparation (standalone)
-python experiments/setup/prepare_data.py                        # OpenWebText
-python experiments/setup/prepare_data_multi.py                  # C4 + WikiText-103
-python experiments/setup/prepare_data_multi.py --dataset c4     # C4 only
+python src/setup/prepare_data.py                        # OpenWebText
+python src/setup/prepare_data_multi.py                  # C4 + WikiText-103
+python src/setup/prepare_data_multi.py --dataset c4     # C4 only
 
 # Analysis
-python experiments/analysis/plot_results.py --exp-dir results/exp1 --subdir exp1 --plot delta
-python experiments/analysis/fit_transfer_fn.py --results-dirs results/exp1/*/ --subdir exp2
-python experiments/analysis/compare_models.py --plot all        # cross-model/dataset comparison
+python src/analysis/plot_results.py --exp-dir results/exp1 --subdir exp1 --plot delta
+python src/analysis/fit_transfer_fn.py --results-dirs results/exp1/*/ --subdir exp2
+python src/analysis/compare_models.py --plot all        # cross-model/dataset comparison
 
 # Exp10: single-gen p_syn sweep with pre-existing AI datasets
 python src/setup/prepare_data_synthetic.py --dataset cosmopedia  # download Cosmopedia
@@ -108,4 +108,4 @@ python src/analysis/plot_single_gen.py --exp-dir results/exp10 --plot all
 - `ebc042e767de551803ccfcc45e2454f5-Paper-Conference.pdf` — Reference paper (Dohmatob et al.)
 - `3.19/` — Earlier experiment results (exp0/exp1/exp2) from initial validation run
 - `results/` — Current experiment outputs
-- `experiments/utils.py` — Shared utilities: MAUVE computation, GPU memory management, plotting helpers, Timer context manager
+- `src/utils.py` — Shared utilities: MAUVE computation, GPU memory management, plotting helpers, Timer context manager

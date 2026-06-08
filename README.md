@@ -1,5 +1,11 @@
 # IQD：信息质量密度框架 — 量化多代 AI 模型崩溃
 
+> **当前实验方向（2026-06）**：聚焦 Mistral-7B「开源数据混合多代续训」崩溃实验(每代在 真实开源 ⊕ 开源AI 混合上续训,**不回收模型自产输出**)。
+> 设计：[`docs/superpowers/specs/2026-06-08-mistral-opensource-mixing-collapse-design.md`](docs/superpowers/specs/2026-06-08-mistral-opensource-mixing-collapse-design.md) ·
+> 实施计划：[`docs/superpowers/plans/2026-06-08-mistral-osmix-experiment.md`](docs/superpowers/plans/2026-06-08-mistral-osmix-experiment.md)
+> 运行：`python src/train/run_chain_osmix.py --exp-id osmix_d1_p50_s42 --grid src/configs/experiment_grid_osmix.csv`
+> 早期 toy/线性/GPT-2 实验(exp0/exp1/baseline)已归档,不再继续。
+
 本研究项目探索多代 AI 模型崩溃现象，提出 **IQD（Information Quality Density）** 框架作为统一的量化指标。基于 "Strong Model Collapse"（Dohmatob et al., ICLR 2025）等工作，我们从第一性原理推导偏差 δ 的来源，并首次使用 MAUVE 分数实证追踪多代崩溃过程。
 
 ---
