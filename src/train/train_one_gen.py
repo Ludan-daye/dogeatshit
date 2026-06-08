@@ -20,10 +20,20 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
-from experiments.utils import clear_gpu_memory, gpu_mem_usage, Timer
+from src.utils import clear_gpu_memory, gpu_mem_usage, Timer
 
 
 # ── Fine-tune ────────────────────────────────────────────────────────────────
+
+def build_lora_config():
+    """Mistral 注意力投影上的 LoRA 配置。"""
+    from peft import LoraConfig
+    return LoraConfig(
+        r=16, lora_alpha=32, lora_dropout=0.05,
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+        bias="none", task_type="CAUSAL_LM",
+    )
+
 
 def finetune(
     prev_model: str,
@@ -37,6 +47,7 @@ def finetune(
     max_length: int   = 256,
     warmup_steps: int = 50,
     seed: int         = 42,
+    use_lora: bool    = False,
 ) -> None:
     from transformers import (
         AutoTokenizer, AutoModelForCausalLM,
@@ -60,6 +71,11 @@ def finetune(
         torch_dtype=dtype,
     ).to(device)
     gpu_mem_usage()
+
+    if use_lora:
+        from peft import get_peft_model
+        model = get_peft_model(model, build_lora_config())
+        model.print_trainable_parameters()
 
     # ── Tokenise ──
     encodings = tokenizer(
@@ -104,6 +120,9 @@ def finetune(
         train_dataset=dataset, data_collator=data_collator,
     )
     trainer.train()
+
+    if use_lora:
+        model = model.merge_and_unload()
 
     os.makedirs(output_dir, exist_ok=True)
     model.save_pretrained(output_dir)

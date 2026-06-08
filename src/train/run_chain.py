@@ -21,11 +21,11 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from experiments.train.train_one_gen import finetune, generate_samples
-from experiments.eval.compute_mauve  import compute_mauve_score, delta_k
-from experiments.eval.compute_ppl    import compute_ppl_on_texts
-from experiments.eval.compute_diversity import compute_repetition_rate
-from experiments.utils import Timer, clear_gpu_memory
+from src.train.train_one_gen import finetune, generate_samples
+from src.eval.compute_mauve  import compute_mauve_score, delta_k
+from src.eval.compute_ppl    import compute_ppl_on_texts
+from src.eval.compute_diversity import compute_repetition_rate
+from src.utils import Timer, clear_gpu_memory
 
 DATA_DIR    = PROJECT_ROOT / "data"
 RESULTS_DIR = PROJECT_ROOT / "results"

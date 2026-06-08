@@ -25,8 +25,8 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
-from experiments.utils import save_fig, save_csv
-from experiments.analysis.plot_results import load_all_metrics, _estimate_alpha
+from src.utils import save_fig, save_csv
+from src.analysis.plot_results import load_all_metrics, _estimate_alpha
 
 
 SUBDIR = "compare"
