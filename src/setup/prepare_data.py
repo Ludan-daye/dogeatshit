@@ -20,8 +20,8 @@ DATA_DIR = PROJECT_ROOT / "data"
 
 DEFAULT_MODEL   = "meta-llama/Llama-2-7b-hf"
 DEFAULT_SEQ_LEN = 128
-DEFAULT_N_REAL  = 5000
-DEFAULT_N_TRAIN = 5000
+DEFAULT_N_REAL  = 5000   # 严格 hold-out 评估集（PPL + MAUVE 参考）
+DEFAULT_N_TRAIN = 30000  # 训练池：每代 5000 × 6 代不重叠 = 30000;留余地避免边界报错
 
 
 def main():

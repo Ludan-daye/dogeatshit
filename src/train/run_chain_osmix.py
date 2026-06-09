@@ -26,7 +26,7 @@ from src.train.schedule import p_syn_schedule
 from src.eval.compute_mauve import compute_mauve_score, delta_k
 from src.eval.compute_ppl import compute_ppl_on_texts
 from src.eval.compute_diversity import compute_repetition_rate
-from src.utils import Timer, clear_gpu_memory, mix_data
+from src.utils import Timer, clear_gpu_memory, get_train_subset_nonoverlap
 
 DATA_DIR    = PROJECT_ROOT / "data"
 RESULTS_DIR = PROJECT_ROOT / "results"
@@ -80,11 +80,17 @@ def run_chain_osmix(row, run_dir):
             prev_dir = str(gen_dir)
             continue
 
-        # 组装训练集:开源真实 ⊕ 开源AI,不含模型自产输出
+        # 组装训练集：Plan-C 每代不重叠子集（避免过拟合同一小集合）
+        # 真实池 / 合成池各从一个固定 permutation 切第 gen 段；两个池用不同 seed
         if p <= 0.0:
-            train_texts = list(train_real[:n_train])
+            train_texts = get_train_subset_nonoverlap(train_real, gen, n_train, seed)
         else:
-            train_texts = mix_data(ai_texts, train_real, p)[:n_train]
+            n_syn  = int(round(n_train * p))
+            n_real = n_train - n_syn
+            real_sub = get_train_subset_nonoverlap(train_real, gen, n_real, seed)        if n_real > 0 else []
+            syn_sub  = get_train_subset_nonoverlap(ai_texts,   gen, n_syn,  seed + 1000) if n_syn  > 0 else []
+            train_texts = list(real_sub) + list(syn_sub)
+            np.random.shuffle(train_texts)
 
         base = prev_dir if prev_dir is not None else model
         with Timer(f"[{exp_id}] gen{gen} finetune (p={p:.2f})"):

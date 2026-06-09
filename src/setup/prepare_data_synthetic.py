@@ -20,7 +20,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = PROJECT_ROOT / "data"
 
-DEFAULT_N_TOKENS = 5_000_000
+DEFAULT_N_TOKENS = 15_000_000  # ~75k 条@200字符,够 6 代 × 5000 不重叠
 DEFAULT_MIN_LEN = 200
 
 # ── 数据集注册表 ─────────────────────────────────────────────────────────────

@@ -56,6 +56,9 @@ def mix_data(syn_texts: list, real_texts: list, p_syn: float) -> list:
     """
     p_syn: synthetic 占比 (0~1)
     返回混合后打乱的文本列表
+
+    注意：本函数取池子的前缀 [:n_real] / [:n_syn]，每次调用拿到相同样本。
+    多代实验中**不能**用它做"每代不同子集"的采样 — 用 get_train_subset_nonoverlap。
     """
     if p_syn >= 1.0:
         mixed = list(syn_texts)
@@ -66,6 +69,30 @@ def mix_data(syn_texts: list, real_texts: list, p_syn: float) -> list:
         mixed  = real_texts[:n_real] + syn_texts[:n_syn]
     np.random.shuffle(mixed)
     return mixed
+
+
+def get_train_subset_nonoverlap(pool: list, gen: int, n_per_gen: int, seed: int) -> list:
+    """
+    Plan-C 采样：从大池子里给第 gen 代取 n_per_gen 条**不重叠**子集。
+
+    用同一个 seed 对池子做一次确定性 permutation，然后切第 gen 段：
+      gen 0 -> [0 : n_per_gen]
+      gen 1 -> [n_per_gen : 2*n_per_gen]
+      ...
+    这样每代训练集完全不重叠，避免"同样本被反复 fine-tune"的过拟合。
+
+    池子至少要有 (gen+1) * n_per_gen 条，否则抛 ValueError。
+    """
+    if (gen + 1) * n_per_gen > len(pool):
+        raise ValueError(
+            f"pool too small: need {(gen+1) * n_per_gen} for gen {gen}, "
+            f"pool has {len(pool)}. Re-run prepare_data with larger --n-train pool."
+        )
+    rng = np.random.default_rng(seed)
+    indices = rng.permutation(len(pool))
+    start = gen * n_per_gen
+    end = start + n_per_gen
+    return [pool[i] for i in indices[start:end]]
 
 
 # ============ MAUVE 相关 ============
