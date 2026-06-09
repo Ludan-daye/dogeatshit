@@ -54,6 +54,8 @@ def run_chain_osmix(row, run_dir):
     seed      = int(row["seed"])
     exp_id    = row["exp_id"]
 
+    GEN0_FIXED_SEED = 42  # 所有链的 gen 0 共用此 seed -> 同一份训练数据 + 同一个初始模型
+
     np.random.seed(seed)
     import torch; torch.manual_seed(seed)
 
@@ -75,6 +77,13 @@ def run_chain_osmix(row, run_dir):
         gen_samples = run_dir / "samples" / f"gen_{gen}.json"
         p = p_syn_schedule(gen, k_max, mode=mode, p_syn=p_syn)
 
+        # gen 0 的 seed 永远固定 -> 跨链/跨 seed 的 gen 0 一定相同,初始模型完全一致
+        effective_seed = GEN0_FIXED_SEED if gen == 0 else seed
+
+        # 重新播种 RNG,保证每一代采样/shuffle/Trainer 都按 effective_seed 走
+        np.random.seed(effective_seed)
+        torch.manual_seed(effective_seed)
+
         # 断点续跑
         if (gen_dir / "config.json").exists() and gen_samples.exists():
             prev_dir = str(gen_dir)
@@ -83,18 +92,18 @@ def run_chain_osmix(row, run_dir):
         # 组装训练集：Plan-C 每代不重叠子集（避免过拟合同一小集合）
         # 真实池 / 合成池各从一个固定 permutation 切第 gen 段；两个池用不同 seed
         if p <= 0.0:
-            train_texts = get_train_subset_nonoverlap(train_real, gen, n_train, seed)
+            train_texts = get_train_subset_nonoverlap(train_real, gen, n_train, effective_seed)
         else:
             n_syn  = int(round(n_train * p))
             n_real = n_train - n_syn
-            real_sub = get_train_subset_nonoverlap(train_real, gen, n_real, seed)        if n_real > 0 else []
-            syn_sub  = get_train_subset_nonoverlap(ai_texts,   gen, n_syn,  seed + 1000) if n_syn  > 0 else []
+            real_sub = get_train_subset_nonoverlap(train_real, gen, n_real, effective_seed)        if n_real > 0 else []
+            syn_sub  = get_train_subset_nonoverlap(ai_texts,   gen, n_syn,  effective_seed + 1000) if n_syn  > 0 else []
             train_texts = list(real_sub) + list(syn_sub)
             np.random.shuffle(train_texts)
 
         base = prev_dir if prev_dir is not None else model
         with Timer(f"[{exp_id}] gen{gen} finetune (p={p:.2f})"):
-            finetune(base, train_texts, str(gen_dir), seed=seed, use_lora=True)
+            finetune(base, train_texts, str(gen_dir), seed=effective_seed, use_lora=True)
 
         # 生成样本:仅评估用
         with Timer(f"[{exp_id}] gen{gen} generate (eval-only)"):
