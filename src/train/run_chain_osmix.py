@@ -95,9 +95,9 @@ def run_chain_osmix(row, run_dir):
             samp = generate_samples(str(gen_dir), n_train)
         json.dump(samp, open(gen_samples, "w"))
 
-        with Timer(f"[{exp_id}] gen{gen} MAUVE"):
-            mauve = compute_mauve_score(mauve_ref, samp[:2000])
-        clear_gpu_memory()
+        # MAUVE 暂时跳过:gpt2-large 的依赖与本地路径校验在新 hf_hub 上常出问题;
+        # 冒烟/早期评估先靠真实数据 PPL（=损失）+ 重复率,MAUVE 可在大规模实验后补算。
+        mauve = -1.0  # sentinel: -1 表示未计算
         ppl = compute_ppl_on_texts(str(gen_dir), ppl_ref)
         rep = compute_repetition_rate(samp[:1000])
 
