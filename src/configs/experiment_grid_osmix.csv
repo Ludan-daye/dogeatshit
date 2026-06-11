@@ -1,7 +1,9 @@
 exp_id,group,model,real_dataset,ai_dataset,mode,p_syn,n_train,k_max,seed,notes
 osmix_d1_p00_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.0,5000,10,42,D1 control pure-real
 osmix_d1_p10_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.1,5000,10,42,D1 10%
+osmix_d1_p20_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.2,5000,10,42,D1 20%
 osmix_d1_p25_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.25,5000,10,42,D1 25%
+osmix_d1_p30_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.3,5000,10,42,D1 30%
 osmix_d1_p50_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.5,5000,10,42,D1 50%
 osmix_d1_p75_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.75,5000,10,42,D1 75%
 osmix_d1_p100_s42,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,1.0,5000,10,42,D1 100%
