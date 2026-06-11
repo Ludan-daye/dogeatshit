@@ -1,0 +1,13 @@
+
+[*] 加载 HuggingFaceTB/cosmopedia (streaming=True) ...
+  已收集 5,000 篇 (~4.9M tokens)
+  已收集 10,000 篇 (~9.9M tokens)
+  已收集 15,000 篇 (~14.9M tokens)
+  已收集 20,000 篇 (~19.9M tokens)
+  已收集 25,000 篇 (~24.9M tokens)
+  已收集 30,000 篇 (~29.9M tokens)
+  已收集 35,000 篇 (~34.9M tokens)
+[*] cosmopedia: 收集 35,131 篇 (~35.0M tokens)
+[保存] /mnt/d5f4cfb6-8afe-40a4-8650-2965046cd208/ludan/reaserch/dogeatshit/data/syn_cosmopedia_texts.json  (35,131 篇)
+
+[*] 合成数据准备完成!

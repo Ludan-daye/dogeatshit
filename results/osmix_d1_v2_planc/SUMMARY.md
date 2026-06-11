@@ -44,6 +44,29 @@ p=0.5 链 MAUVE gen 1 暴跌(0.619 → 0.165, **-73%**),之后渐进恢复但**�
 p=0.5 链 rep_rate 全程稳定 ~0.017,但 MAUVE 大起大落。
 → 词频多样性不能捕捉分布漂移。**MAUVE 是 stealth collapse 的唯一可观测信号**。
 
+## 扩展指标(`metrics_full.jsonl`)
+
+除 PPL/MAUVE/rep_rate 外,从 saved samples 离线算了一套独立的生成质量指标(`src/analysis/compute_extended_metrics.py`)。**关键发现:KL(P_gen ‖ P_real) 跟 MAUVE 走势完全一致**,给"分布漂移"提供独立于 MAUVE 的双保险证据。
+
+### 关键数据(基线 vs 中污染 vs 全合成)
+
+| 指标 | 基线 gen 5 | p=0.5 gen 1(暴跌) | p=0.5 gen 10(恢复后) | p=1.0 gen 6 |
+|------|------------|---------------------|------------------------|---------------|
+| distinct-1 | 0.064 | **0.114**(↑38%) | 0.084 | 0.084 |
+| distinct-2 | 0.392 | **0.536**(↑37%) | 0.468 | 0.473 |
+| Token entropy (bits) | 9.58 | **11.11**(↑16%) | 10.50 | 10.76 |
+| **KL(P_gen ‖ P_real)** | **0.305** | **0.902** | **0.526** | **1.269** |
+| mean length | 185 | 169 | 188 | 190 |
+| std length | ±20 | ±44 | ±17 | **±13**(模式坍缩) |
+
+### 几个独立证据
+
+1. **KL ⇄ MAUVE 完全同步**:p=0.5 KL 从 0.30 → 0.90 → 0.53(永不归位),MAUVE 从 0.62 → 0.17 → 0.40(永不归位)。两个指标基于完全不同的数学(KL 看 unigram 频率,MAUVE 看 GPT-2 embedding)却得到一致结论 → **stealth collapse 不是 MAUVE 一家之言,token-level 也能看到**。
+2. **长度方差单调收敛**:基线 ±40 → ±20,p=1.0 ±39 → **±13** → **模式坍缩(mode collapse)**:模型生成越来越"模板化"。
+3. **生成长度本身不退化**:都在 170-190 词之间,**只看长度看不出污染**。
+
+详见 `plots/extended_metrics.png`(2×3 dashboard:distinct-1/2/3 + token entropy + KL + 长度)。
+
 ## 文献定位
 
 - 对齐 *Strong Model Collapse* (Dohmatob, ICLR 2025) 的"低比例致崩"问题,但用**外部开源 AI 数据**(非自消费),更贴近现实开源 corpus 受污染的场景。
