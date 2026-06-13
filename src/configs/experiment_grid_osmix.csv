@@ -12,3 +12,5 @@ osmix_d1_p50_s123,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,ow
 osmix_d1_p50_s456,osmix_d1,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,constant,0.5,5000,10,456,D1 50% seed456
 osmix_d2_ramp_s123,osmix_d2,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,ramp,1.0,5000,10,123,D2 ramp seed123
 osmix_d2_ramp_s456,osmix_d2,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia,ramp,1.0,5000,10,456,D2 ramp seed456
+osmix_smoke_chunked,osmix_smoke,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia_chunked,constant,0.5,200,2,42,Format-aligned smoke (chunked Cosmopedia)
+osmix_d1_p50_aligned_s42,osmix_d1_aligned,/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1,owt,cosmopedia_chunked,constant,0.5,5000,10,42,Format-aligned p=0.5 ablation
