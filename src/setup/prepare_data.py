@@ -34,6 +34,8 @@ def main():
                         help="D_real 条数")
     parser.add_argument("--n-train", type=int, default=DEFAULT_N_TRAIN,
                         help="D_train 条数")
+    parser.add_argument("--suffix", type=str, default="",
+                        help="输出文件名后缀(避免覆盖默认数据),例如 '_mistral'")
     args = parser.parse_args()
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -82,7 +84,7 @@ def main():
 
     # ── 保存 ──
     for name, data in [("real_texts", real_texts), ("train_texts", train_texts)]:
-        path = DATA_DIR / f"{name}.json"
+        path = DATA_DIR / f"{name}{args.suffix}.json"
         with open(path, "w") as f:
             json.dump(data, f, ensure_ascii=False)
         print(f"[保存] {path}")

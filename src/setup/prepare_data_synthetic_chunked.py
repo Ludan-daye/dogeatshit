@@ -21,7 +21,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = PROJECT_ROOT / "data"
 
-DEFAULT_MODEL    = "meta-llama/Llama-2-7b-hf"
+DEFAULT_MODEL    = "/home/vicuna/ludan/reaserch/models/Mistral-7B-v0.1"
 DEFAULT_SEQ_LEN  = 128
 DEFAULT_N_CHUNKS = 5000
 DEFAULT_MAX_DOCS = 100_000  # 取这么多篇原文就够切 5000+ 块

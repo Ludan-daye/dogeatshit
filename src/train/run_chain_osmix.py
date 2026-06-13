@@ -32,9 +32,10 @@ DATA_DIR    = PROJECT_ROOT / "data"
 RESULTS_DIR = PROJECT_ROOT / "results"
 
 DATASET_FILES = {
-    "owt":  ("real_texts.json",      "train_texts.json"),
-    "c4":   ("c4_real_texts.json",   "c4_train_texts.json"),
-    "wiki": ("wiki_real_texts.json", "wiki_train_texts.json"),
+    "owt":          ("real_texts.json",          "train_texts.json"),
+    "owt_mistral":  ("real_texts_mistral.json",  "train_texts_mistral.json"),
+    "c4":           ("c4_real_texts.json",       "c4_train_texts.json"),
+    "wiki":         ("wiki_real_texts.json",     "wiki_train_texts.json"),
 }
 
 
